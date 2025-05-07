@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const mysql = require('mysql2');
+const pool = require('./db');
 const indexRouter = require('./routes/index'); //　ルート分割用
 
 const app = express();

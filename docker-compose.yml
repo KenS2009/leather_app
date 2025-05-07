@@ -20,6 +20,7 @@ services:
     working_dir: /app
     volumes:
       - ./backend:/app
+      - /app/node_modules        # node_modules はコンテナ内のものを使う
     ports:
       - "3000:3000"
     depends_on:

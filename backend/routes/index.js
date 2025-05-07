@@ -1,16 +1,29 @@
 const express = require('express');
 const router = express.Router();
 
-// 今はタイトルだけ渡す
+// app.js からプールを取り込む方法
+const { pool } = require('../app');
+const pool = require('../db');
+
 router.get('/', (req, res) => {
-  res.render('index', {
-    title: 'LeatherWorks へようこそ',
-    works: []  // のちほど DB から取得した配列をここに入れる
+  const sql = `
+    SELECT 
+      w.id, w.title, w.description, w.image_path, u.name 
+    FROM works AS w
+    JOIN users AS u ON w.user_id = u.id
+    ORDER BY w.created_at DESC
+  `;
+  pool.query(sql, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('作品一覧の取得に失敗しました');
+    }
+    // results は [{id, title, description, image_path, name}, ...]
+    res.render('index', {
+      title: 'LeatherWorks へようこそ',
+      works: results
+    });
   });
 });
-
-// （のちほど）投稿ページへのルートや詳細ルートもここに追加していきます。
-// router.get('/works/new', …);
-// router.get('/works/:id', …);
 
 module.exports = router;
