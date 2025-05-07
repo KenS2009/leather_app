@@ -29,6 +29,18 @@ services:
       - DB_USER=user
       - DB_PASSWORD=userpass
       - DB_NAME=leatherworks
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: user
+      PMA_PASSWORD: userpass
+    ports:
+      - "8080:80"
+    depends_on:
+      - db  
 
 volumes:
   db-data:

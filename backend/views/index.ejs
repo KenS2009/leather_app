@@ -1,1 +1,35 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav>
+    <a href="/">ホーム</a>
+    <a href="/works/new">作品を投稿</a>
+  </nav>
+
+  <main>
+    <h1><%= title %></h1>
+
+    <!-- 作品一覧を later に追加するときはここでループ -->
+    <ul class="gallery">
+      <% if (works && works.length) { %>
+        <% works.forEach(work => { %>
+          <li>
+            <img src="<%= work.image_path %>" alt="<%= work.title %>" />
+            <h2><%= work.title %></h2>
+            <p><%= work.description %></p>
+            <small>投稿者：<%= work.name %></small>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>まだ作品が登録されていません。</li>
+      <% } %>
+    </ul>
+  </main>
+</body>
+</html>
